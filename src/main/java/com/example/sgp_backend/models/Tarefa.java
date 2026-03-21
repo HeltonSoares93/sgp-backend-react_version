@@ -2,10 +2,13 @@ package com.example.sgp_backend.models;
 
 import java.util.Date;
 
+import com.example.sgp_backend.enums.TarefaStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,7 +27,7 @@ public class Tarefa {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  @Column(nullable = false, length = 25)
+  @Column(nullable = false, length = 45)
   private String titulo;
 
   @Column(nullable = false, columnDefinition = "TEXT")
@@ -40,6 +43,10 @@ public class Tarefa {
   @ManyToOne
   @JoinColumn(nullable = false)
   private Projeto projeto;
+
+  @Enumerated(value = EnumType.STRING)
+  @Column(nullable = false)
+  private TarefaStatus status;
 
   @ManyToOne
   @JoinColumn(nullable = false)

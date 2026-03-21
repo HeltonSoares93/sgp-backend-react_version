@@ -31,7 +31,7 @@ public class Projeto {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false, length = 25)
+  @Column(nullable = false, length = 45)
   private String titulo;
 
   @Column(nullable = false, columnDefinition = "TEXT")
