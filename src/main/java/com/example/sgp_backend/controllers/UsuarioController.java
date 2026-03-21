@@ -43,7 +43,7 @@ public class UsuarioController {
   public ResponseEntity<Optional<Usuario>> buscarUsuarioPorId(@PathVariable("id") Long id) {
     Optional<Usuario> usuarioExiste = service.findUsuarioPorId(id);
 
-    if (Objects.isNull(usuarioExiste)) {
+    if (usuarioExiste.isEmpty()) {
       return ResponseEntity.notFound().build();
     }
 

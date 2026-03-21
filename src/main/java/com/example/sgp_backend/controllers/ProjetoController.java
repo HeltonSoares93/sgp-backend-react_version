@@ -1,7 +1,6 @@
 package com.example.sgp_backend.controllers;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ import com.example.sgp_backend.models.Projeto;
 import com.example.sgp_backend.services.ProjetoService;
 
 @RestController
-@RequestMapping("/Projetos")
+@RequestMapping("/projetos")
 public class ProjetoController {
 
   @Autowired
@@ -41,9 +40,9 @@ public class ProjetoController {
   // buscar Projeto por ID
   @GetMapping(value = "/{id}")
   public ResponseEntity<Optional<Projeto>> buscarProjetoPorId(@PathVariable("id") Long id) {
-    Optional<Projeto> ProjetoExiste = service.findProjetoPorId(id);
+    Optional<Projeto> projetoExiste = service.findProjetoPorId(id);
 
-    if (Objects.isNull(ProjetoExiste)) {
+    if (projetoExiste.isEmpty()) {
       return ResponseEntity.notFound().build();
     }
 
@@ -53,8 +52,8 @@ public class ProjetoController {
   // Atualizar projeto
   @PutMapping("/{id}")
   public ResponseEntity<Projeto> atualizarProjeto(@PathVariable Long id, @RequestBody Projeto u) {
-    Optional<Projeto> ProjetoExiste = service.findProjetoPorId(id);
-    if (Objects.isNull(ProjetoExiste)) {
+    Optional<Projeto> projetoExiste = service.findProjetoPorId(id);
+    if (projetoExiste.isEmpty()) {
       return ResponseEntity.notFound().build();
     }
     u.setId(id);
@@ -64,8 +63,8 @@ public class ProjetoController {
   // deletar projeto por ID
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deletarProjetoId(@PathVariable Long id) {
-    Optional<Projeto> ProjetoExiste = service.findProjetoPorId(id);
-    if (Objects.isNull(ProjetoExiste)) {
+    Optional<Projeto> projetoExiste = service.findProjetoPorId(id);
+    if (projetoExiste.isEmpty()) {
       return ResponseEntity.notFound().build();
     }
     service.deletarProjeto(id);

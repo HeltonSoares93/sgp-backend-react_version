@@ -2,6 +2,8 @@ package com.example.sgp_backend.models;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,6 +36,7 @@ public class Tarefa {
   @Column(nullable = false)
   private Date dataConclusao;
 
+  @JsonBackReference
   @ManyToOne
   @JoinColumn(nullable = false)
   private Projeto projeto;
@@ -43,3 +46,11 @@ public class Tarefa {
   private Usuario responsavel;
 
 }
+
+// "havia um relacionamento bidirecional entre Projeto e Tarefa que causava uma
+// recursividade infinita (loop) na serialização do JSON.
+// Inicialmente foi utilizado o @JsonIgnore, mas ele impedia a desserialização
+// no momento do POST, enviando dados nulos para o banco. A solução encontrada
+// foi utilizar @JsonManagedReference no lado 'One' (Projeto) e
+// @JsonBackReference no lado 'Many' (Tarefa), garantindo a quebra do loop no
+// GET e a integridade dos dados no POST."

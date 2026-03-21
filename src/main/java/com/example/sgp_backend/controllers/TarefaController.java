@@ -1,7 +1,6 @@
 package com.example.sgp_backend.controllers;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ import com.example.sgp_backend.models.Tarefa;
 import com.example.sgp_backend.services.TarefaService;
 
 @RestController
-@RequestMapping("/Tarefas")
+@RequestMapping("/tarefas")
 public class TarefaController {
 
   @Autowired
@@ -41,9 +40,9 @@ public class TarefaController {
   // buscar Tarefa por ID
   @GetMapping(value = "/{id}")
   public ResponseEntity<Optional<Tarefa>> buscarTarefaPorId(@PathVariable("id") Long id) {
-    Optional<Tarefa> TarefaExiste = service.findTarefaPorId(id);
+    Optional<Tarefa> tarefaExiste = service.findTarefaPorId(id);
 
-    if (Objects.isNull(TarefaExiste)) {
+    if (tarefaExiste.isEmpty()) {
       return ResponseEntity.notFound().build();
     }
 
@@ -53,8 +52,8 @@ public class TarefaController {
   // Atualizar Tarefa
   @PutMapping("/{id}")
   public ResponseEntity<Tarefa> atualizarTarefa(@PathVariable Long id, @RequestBody Tarefa u) {
-    Optional<Tarefa> TarefaExiste = service.findTarefaPorId(id);
-    if (Objects.isNull(TarefaExiste)) {
+    Optional<Tarefa> tarefaExiste = service.findTarefaPorId(id);
+    if (tarefaExiste.isEmpty()) {
       return ResponseEntity.notFound().build();
     }
     u.setId(id);
@@ -64,8 +63,8 @@ public class TarefaController {
   // deletar Tarefa por ID
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deletarTarefaId(@PathVariable Long id) {
-    Optional<Tarefa> TarefaExiste = service.findTarefaPorId(id);
-    if (Objects.isNull(TarefaExiste)) {
+    Optional<Tarefa> tarefaExiste = service.findTarefaPorId(id);
+    if (tarefaExiste.isEmpty()) {
       return ResponseEntity.notFound().build();
     }
     service.deletarTarefa(id);
